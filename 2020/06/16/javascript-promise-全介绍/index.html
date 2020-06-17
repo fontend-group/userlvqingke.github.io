@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="董沅鑫, yuanxin.me@gmail.com" />
+  
+  
+  
+  <title>javascript promise 全介绍 | 勤富人</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,promise,异步," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="Something just like this!">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">小灰灰</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>抓到我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/userlvqingke" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/qin-fu-ren-26" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>javascript promise 全介绍</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-06-16
+    </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="javascript-promise-全介绍"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="promise-ajax-async-await-关系"><a href="#promise-ajax-async-await-关系" class="headerlink" title="promise ajax async/await 关系"></a>promise ajax async/await 关系</h3><ol>
+<li>promise是一个语法，用来处理异常行为，优化异步的语法</li>
+<li>ajax，是JavaScript中一种技术名称，可以向服务器传送或获取资源，并且不需要重新渲染页面，大大减轻了服务器的压力和提高了用户的体验。</li>
+<li>async/await， 是可以基于promise来处理异步语法结构，使之更适类似同步语言，易读。</li>
+</ol>
+<h3 id="Promise结构"><a href="#Promise结构" class="headerlink" title="Promise结构"></a>Promise结构</h3><p><img src="../../../../image/promise1.jpg" alt="Promise结构"><br>Promise 为构造函数，也是一个对象，从上图可以知道，Promise可以直接使用的有：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Promise</span>.</span></span>all<span class="literal">()</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Promise</span>.</span></span>all<span class="constructor">Settled()</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Promise</span>.</span></span>race<span class="literal">()</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Promise</span>.</span></span>resolve<span class="literal">()</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Promise</span>.</span></span>reject<span class="literal">()</span></span><br></pre></td></tr></table></figure>
+<p>通过new操作符创建的对象，可以使用Promise原型（prototype）中的方法/属性：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let p = <span class="keyword">new</span> Promise(<span class="function"><span class="params">(resolve, reject)</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line">p.<span class="keyword">then</span>()</span><br><span class="line">p.<span class="keyword">catch</span>()</span><br><span class="line">p.<span class="keyword">finally</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Promise-状态"><a href="#Promise-状态" class="headerlink" title="Promise 状态"></a>Promise 状态</h3><p>Promise执行异步操作有着不同的进度状态：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">pending:</span> Promise事件已在运行中，尚未取得结果</span><br><span class="line">fulfilled/<span class="string">resolved:</span> Promise事件已执行完毕且操作成功，回传resolve结果</span><br><span class="line"><span class="string">rejected:</span> Promise事件已执行完毕且操作失败，回传reject结果</span><br></pre></td></tr></table></figure>
+<p>判断Promise事件是否执行完毕，看Promise事件中的resolve/reject事件是否触发。如果两个都没有触发，则Promise事件停留在pending状态<br><img src="../../../../image/promise2.png" alt="Promise 状态"></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[[PromiseStatus]]</span>: <span class="string">"pending"</span> // 表示目前的进度状态</span><br><span class="line"><span class="string">[[PromiseValue]]</span>: undefined // 表示resolve和reject的返回值</span><br></pre></td></tr></table></figure>
+<p>观察下面Promise事件的状态变化及回传值<br><img src="../../../../image/promise3.png" alt="Promise 状态"><br><img src="../../../../image/promise4.png" alt="Promise 状态"></p>
+<h3 id="建立自己的promise"><a href="#建立自己的promise" class="headerlink" title="建立自己的promise"></a>建立自己的promise</h3><p>要熟悉Promise，最好的方式莫过于自己写一次Promise<br>Promise创建实例对象时，需要传一个函数作为参数。此函数的参数有两个：resolve,reject,这两个方法表示成功的回传，失败的回传；特别注意，这两个回传只会执行其中之一，且只会执行一次，回传后代表Promise事件结束。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> num = <span class="built_in">Math</span>.random() &gt; <span class="number">0.5</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (num) &#123;</span><br><span class="line">      resolve(<span class="string">'success'</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      reject(<span class="string">'fail'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行Promise事件，必定经过Pending状态。接下来进入Fulfilled或Rejected其中之一。并且可以使用then()或catch()取得成功或失败的结果。<br>.then(onFulfilled, onRejected)中可以带两个回调函数，两个可以携带自己的参数<br>onFulfilled: Promise事件执行成功时，所带入的参数是Promise函数中resolve回传值；<br>onRejected: Promise事件执行失败是，所带入的参数是Promise函数中reject回传值；</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">promise()</span><br><span class="line">.<span class="keyword">then</span>(<span class="function"><span class="params">(success)</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success)</span><br><span class="line">&#125;, <span class="function"><span class="params">(fail)</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fail)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>大部分情况下，开发者习惯用.then()来接受成功的回传值，用.catch()接受失败的回传值</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">promise()</span><br><span class="line">.<span class="keyword">then</span>(<span class="function"><span class="params">(success)</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success)</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="keyword">catch</span>(<span class="function"><span class="params">(fail)</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fail)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h3><p>为了确保异步完成后才执行另一种方法，过去都是通过callback的方式来实现。<br>Promise的一个特点：then、catch都可以使用链接的方式不断的进行下一个任务<br>举个列子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    num ? resolve(<span class="string">`<span class="subst">$&#123;num&#125;</span> success`</span>) : reject(<span class="string">'fail'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">promise(<span class="number">1</span>)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">0</span>) <span class="comment">// 这个阶段会进入catch</span></span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 由于上个阶段处理的结果是reject，所以不会进入这里</span></span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.catch(<span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fail);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Then-VS-Catch的失败回传差异"><a href="#Then-VS-Catch的失败回传差异" class="headerlink" title="Then VS Catch的失败回传差异"></a>Then VS Catch的失败回传差异</h3><p>then和catch都可以使用链式调用，都可以处理reject回传值<br>不适用then接受失败：无论哪个阶段遇到reject，都会直接跳到catch，在其后的then都不会执行。catch也可以返回promise对象，但开发中很少这么用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这种情况见上一段代码</span><br></pre></td></tr></table></figure>
+<p>使用咱接收失败：then中两个函数式必定接收其中一个（onFulfilled、onRejected）。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">promise(<span class="number">0</span>)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">1</span>)</span><br><span class="line">&#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fail);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">0</span>)</span><br><span class="line">&#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fail);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">4</span>)</span><br><span class="line">&#125;, <span class="function"><span class="params">fail</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fail);</span><br><span class="line">  <span class="keyword">return</span> promise(<span class="number">5</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">success</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(success);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Promise-Finally完成"><a href="#Promise-Finally完成" class="headerlink" title="Promise Finally完成"></a>Promise Finally完成</h3><p>最后放可以接收finally来确认工作结束，finally不带任何参数。无论是成功或失败，都会走。</p>
+<h3 id="Promise-方法介绍"><a href="#Promise-方法介绍" class="headerlink" title="Promise 方法介绍"></a>Promise 方法介绍</h3><p>Promise API<br>Promise.all(): 多个Promise同时并发执行，全部成功完成后统一返回。如有失败，则触发catch返回第一个失败的信息<br>Promise.allSettled(): 多个Promise同时并发执行，全部完成后统一返回，无论成功/失败，结果都包含在返回的数组里。<br>Promise.resolve(): 定义了Funfilled的Promise对象<br>Promise.reject(): 定义了Rejected的Promise对象<br>Promise.race(): 多个Promise同时并发执行，去第一个完成的结果返回。</p>
+<h3 id="Promise-按顺序执行异步事件"><a href="#Promise-按顺序执行异步事件" class="headerlink" title="Promise 按顺序执行异步事件"></a>Promise 按顺序执行异步事件</h3><ol>
+<li>需要搞清楚的是Promise.all是并行执行Promise而不是顺序执行</li>
+<li>一个promise在创建的时候就会执行，也就是说只要顺序创建，就是顺序执行<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">方案一 </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve();</span><br><span class="line">    <span class="built_in">console</span>.log(index);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">executePromises</span>(<span class="params">promises</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="built_in">Promise</span>.resolve(<span class="string">'success'</span>);</span><br><span class="line">  promises.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    result = result.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> promise(item);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">executePromises([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">方案二 <span class="keyword">async</span>/<span class="keyword">await</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve();</span><br><span class="line">    <span class="built_in">console</span>.log(index);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">executePromises</span>(<span class="params">promises</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, len = promises.length; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">await</span> promise(promises[i])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">executePromises([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">方案三 递归方式</span><br><span class="line"><span class="function"><span class="keyword">function</span></span> promise(<span class="built_in">index</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    resolve();</span><br><span class="line">    console.<span class="built_in">log</span>(<span class="built_in">index</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span></span> executePromises(promises, <span class="built_in">index</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">index</span> &gt;=<span class="number">0</span> &amp;&amp; <span class="built_in">index</span> &lt; promises.length) &#123;</span><br><span class="line">    promise(promises[<span class="built_in">index</span>])</span><br><span class="line">    <span class="built_in">index</span>++</span><br><span class="line">    executePromises(promises, <span class="built_in">index</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">executePromises([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="使用Promise-改写XMLHttpRequest"><a href="#使用Promise-改写XMLHttpRequest" class="headerlink" title="使用Promise 改写XMLHttpRequest"></a>使用Promise 改写XMLHttpRequest</h3>Promise很多时候用来处理ajax请求<br>传统实现方式中，用XMLHttpRequest构造实例对象，定义请求方法(GET)及状态(onload)，并发送请求，拿到结果后的其他行为在onload中处理<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url = <span class="string">'index.html'</span>;</span><br><span class="line"><span class="comment">// 创建XMLHttpRequest实例对象</span></span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"><span class="comment">// 定义方法</span></span><br><span class="line">xhr.open(<span class="string">'GET'</span>, url);</span><br><span class="line"><span class="comment">// 请求完成时，触发</span></span><br><span class="line">xhr.onload(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="comment">// 请求成功</span></span><br><span class="line">    <span class="built_in">console</span>.log(xhr.response)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 请求失败</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 发送请求</span></span><br><span class="line">xhr.send()</span><br></pre></td></tr></table></figure>
+来，我们用promise封装GET请求<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    xhr.open(<span class="string">'GET'</span>, url);</span><br><span class="line">    xhr.onload(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">        resolve(xhr.response);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        reject(xhr.status);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    xhr.send()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">get(<span class="string">'index.html'</span>)</span><br><span class="line">.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;)</span><br><span class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+  </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/javascript/">
+              #javascript
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/promise/">
+              #promise
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%BC%82%E6%AD%A5/">
+              #异步
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/06/16/javascript%E4%B8%AD%E7%90%86%E8%A7%A3%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" target="_self">javascript中理解发布-订阅模式</a>
+      </div>
+    
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz",
+      appKey: "WaR7nrzhliHj9aVwdQzkdlGd",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz", "WaR7nrzhliHj9aVwdQzkdlGd");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw" target="_blank" rel="noopener">BMW</a> | Made With 💗 | Powered by <a href="https://godbmw.com/" target="_blank" rel="noopener">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2018, 1, 10).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
