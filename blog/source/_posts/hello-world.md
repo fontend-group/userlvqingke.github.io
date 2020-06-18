@@ -1,5 +1,7 @@
 ---
-title: Hello World
+title: hexo 操作指南
+date: 2020-06-11 18:52:52
+tags: ['博客', 'hexo']
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 

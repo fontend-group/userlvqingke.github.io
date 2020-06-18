@@ -1,7 +1,7 @@
 ---
 title: webpack操作总结
 date: 2020-06-14 18:52:52
-tags:
+tags: ['javascript', 'webpack', '构建工具']
 ---
 ## 基础篇
 1. 环境搭建
