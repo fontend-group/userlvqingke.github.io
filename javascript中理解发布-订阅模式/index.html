@@ -144,6 +144,7 @@
     </nav>
     <i class="iconfont icon-menu"></i>
   </header>
+  <div class="processBar"></div>
 </div>
 
 <script>
@@ -178,6 +179,7 @@
       : navDOM.className = "site-navigation";
     iconMenuClicked = !iconMenuClicked;
   })
+  
 </script>
 
       
@@ -589,7 +591,9 @@ setTimeout(updateTimeStr, 500);
 <script>
 const updateIconToTop = percent => {
   let dom = document.querySelector(".back-to-top span span");
+  let processBarEl = document.querySelector('.processBar');
   dom.innerText = percent;
+  processBarEl.style.width = `${percent}%`;
   if(percent < 1) {
     document.querySelector(".back-to-top").className = "back-to-top hidden";
   } else {
