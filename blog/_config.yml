@@ -6,16 +6,17 @@
 title: 勤富人
 subtitle: 技术打怪升级
 description: Something just like this!
-keywords: 前端 HTML5 CSS JS VUE Grain Kerkee 
+keywords: 前端 HTML5 CSS JavaScript VUE Webpack
 author: Jack Lv
 language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://userlvqingke.github.io/
 root: /
-permalink: :year/:month/:day/:title/
+# permalink: :year/:month/:day/:title/
+permalink: :title/
 permalink_defaults:
 
 # Directory
@@ -103,3 +104,6 @@ jsonContent:
     excerpt: false
     categories: false
     tags: true
+
+sitemap: 
+  path: sitemap.xml
