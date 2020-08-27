@@ -9,12 +9,12 @@
   
   
   
-  <title>计算机网络简介 | 勤富人</title>
+  <title>工作日每天一道大厂面试题 | 勤富人</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="HTTP,HTTPS,TCP," />
+    <meta name="keywords" content="javascript,webpack,react,vue,css," />
   
 
   <script>
@@ -197,17 +197,17 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>计算机网络简介</span>
+    <span>工作日每天一道大厂面试题</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2020-06-18
+      2020-08-27
     </span>
     
     
       <span>
-        浏览 : <span class="article-timer" data-identity="计算机网络简介"></span>
+        浏览 : <span class="article-timer" data-identity="工作日每天一道大厂面试题"></span>
       </span>
     
   </div>
@@ -216,278 +216,20 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>因特网传输控制协议<br>TCP提供一种面向连接的、可靠的字节流服务</p>
-<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><ol>
-<li>浏览器发包给服务器</li>
-<li>服务器发包给浏览器，告诉浏览器我收到你的请求了</li>
-<li>浏览器发包给服务器，告诉服务器我能收到你的包 </li>
-</ol>
-<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><ol>
-<li>浏览器：我没有包要传给服务器了，但还可以接受服务器传回的包</li>
-<li>服务器：好的，那可以断开连接了，我准备下</li>
-<li>服务器：准备好了，向浏览器发起断开连接的请求</li>
-<li>浏览器：收到服务器发来的请求，发包确认收到</li>
-</ol>
-<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ol>
-<li>HTTP协议构建于TCP/IP协议之上，是一个应用层协议，默认端口号：80</li>
-<li>HTTP是无连接状态的</li>
-</ol>
-<h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><table>
-<thead>
-<tr>
-<th>请求报文</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>请求行</td>
-<td>GET  /test/index.html  HTTP/1.0</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Accept: * / *</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Accept-Encoding: gzip, deflate</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Accept-Language: en,zh,zh-CN</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Cache-Control: no-cache</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Connection: keep-alive</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Cookie: ***</td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>Host: <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></td>
-</tr>
-<tr>
-<td>请求头</td>
-<td>User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36</td>
-</tr>
-<tr>
-<td>请求体</td>
-<td>***</td>
-</tr>
-</tbody></table>
-<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><table>
-<thead>
-<tr>
-<th>响应报文</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>响应行</td>
-<td>HTTP/1.0 200 OK</td>
-</tr>
-<tr>
-<td>响应头</td>
-<td>Content-type: text/html</td>
-</tr>
-<tr>
-<td>Content-length: 1024</td>
-<td></td>
-</tr>
-<tr>
-<td>响应体</td>
-<td>Hi! I am a message!</td>
-</tr>
-</tbody></table>
-<h3 id="http请求方法"><a href="#http请求方法" class="headerlink" title="http请求方法"></a>http请求方法</h3><table>
-<thead>
-<tr>
-<th>http方法</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>GET</td>
-<td>从服务器向浏览器发送命名资源</td>
-</tr>
-<tr>
-<td>POST</td>
-<td>将客户端的数据发送到一个服务器网关应用程序</td>
-</tr>
-<tr>
-<td>PUT</td>
-<td>将来自客户端的数据存储到一个命名的服务器资源中去</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td>从服务器删除某命名资源</td>
-</tr>
-<tr>
-<td>HEAD</td>
-<td>仅发送命名资源响应中的http响应头</td>
-</tr>
-</tbody></table>
-<h3 id="URI-URL"><a href="#URI-URL" class="headerlink" title="URI URL"></a>URI URL</h3><p>URI：统一资源标识符<br>URI就像因特网上的邮政地址一样，在全世界范围内唯一标识并定位信息资源<br>URL：统一资源定位符</p>
-<h3 id="DNS（Domain-Name-Service）"><a href="#DNS（Domain-Name-Service）" class="headerlink" title="DNS（Domain Name Service）"></a>DNS（Domain Name Service）</h3><p>域名服务系统，方便的将主机名转换为IP地址</p>
-<h3 id="http版本"><a href="#http版本" class="headerlink" title="http版本"></a>http版本</h3><ol>
-<li>HTTP/0.9<br>只支持GET请求；不支持多媒体内容的MIME类型；<br>初衷是为了获取简单的HTML对象，它很快被HTTP/1.0取代</li>
-<li>HTTP/1.0<br>第一个得到广泛使用的HTTP版本<br>添加了版本号、各种HTTP首部、一些额外的方法，以及多媒体对象的处理</li>
-<li>HTTP/1.0+<br>添加了新特性：持久的keep-alive连接、虚拟主机的支持、代理连接的支持</li>
-<li>HTTP/1.1<br>矫正HTTP设计中的结构性缺陷，明确语义，引入重要的性能优化措施，并删除一些不好的特性</li>
-<li>HTTP-NG(又名 HTTP/2.0)<br>多路复用，引入流、帧概念；解决了头部阻塞问题</li>
-</ol>
-<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><p>100<del>199 信息性状态码<br>200</del>299 成功状态码<br>300<del>399 重定向状态码<br>400</del>499 客户端错误状态码<br>500~599 服务端错误状态码</p>
-<table>
-<thead>
-<tr>
-<th>状态码</th>
-<th>原因短语</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>100</td>
-<td>Continue</td>
-<td>收到请求的初始部分，请客户端继续</td>
-</tr>
-<tr>
-<td>101</td>
-<td>Switching Protocols</td>
-<td>服务端正在根据请求的指定更改协议</td>
-</tr>
-<tr>
-<td>200</td>
-<td>OK</td>
-<td>请求没问题，成功</td>
-</tr>
-<tr>
-<td>201</td>
-<td>Created</td>
-<td>用于创建服务器对象的请求</td>
-</tr>
-<tr>
-<td>202</td>
-<td>Accepted</td>
-<td>请求已接收，但服务器还未对其作出任何动作</td>
-</tr>
-<tr>
-<td>203</td>
-<td>**</td>
-<td>**</td>
-</tr>
-<tr>
-<td>204</td>
-<td>**</td>
-<td>**</td>
-</tr>
-<tr>
-<td>205</td>
-<td>**</td>
-<td>**</td>
-</tr>
-<tr>
-<td>300</td>
-<td>Multiple Choices</td>
-<td>请求中URL指向多个资源</td>
-</tr>
-<tr>
-<td>301</td>
-<td>Moved Permanently</td>
-<td>请求的URL已被移除</td>
-</tr>
-<tr>
-<td>302</td>
-<td>Found</td>
-<td>与301类似，但是客户端应该使用Location响应头给出的URL来临时定位资源</td>
-</tr>
-<tr>
-<td>303</td>
-<td>See Other</td>
-<td>告诉客户端应该用另一个URL来获取资源</td>
-</tr>
-<tr>
-<td>304</td>
-<td>Not Modified</td>
-<td>请求的URL资源没有更新，可以继续使用缓存中的数据</td>
-</tr>
-<tr>
-<td>305</td>
-<td>Use Proxy</td>
-<td>必须通过一个代理来访问资源</td>
-</tr>
-<tr>
-<td>400</td>
-<td>Bad Request</td>
-<td>用于警告客户端它发送了一个错误的请求</td>
-</tr>
-<tr>
-<td>401</td>
-<td>**</td>
-<td>**</td>
-</tr>
-<tr>
-<td>402</td>
-<td>**</td>
-<td>未使用，已保留</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden</td>
-<td>服务端拒绝了请求</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found</td>
-<td>服务端无法找到所请求的URL</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed</td>
-<td>请求中带有URL不支持的方法</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error</td>
-<td>服务器遇到一个妨碍它为请求提供服务的错误</td>
-</tr>
-<tr>
-<td>501</td>
-<td>No Implemented</td>
-<td>客户端的请求超出了服务端的能力范围</td>
-</tr>
-<tr>
-<td>502</td>
-<td>Bad Gateway</td>
-<td>***</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable</td>
-<td>***</td>
-</tr>
-<tr>
-<td>504</td>
-<td>Gateway Timeout</td>
-<td>***</td>
-</tr>
-<tr>
-<td>505</td>
-<td>HTTP Version Not Supported</td>
-<td>服务器收到的请求使用了它无法或不愿支持的协议版本</td>
-</tr>
-</tbody></table>
-<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="特性-1"><a href="#特性-1" class="headerlink" title="特性"></a>特性</h3><p>HTTPS即HTTP + TLS，是一种在加密信道进行HTTP内容传输的协议，默认端口号：443</p>
-<h3 id="四次握手"><a href="#四次握手" class="headerlink" title="四次握手"></a>四次握手</h3><p>web浏览器：发送https请求，<br>web服务器：返回CA证书（包括公钥）<br>web浏览器：检查CA证书是否可信，确定可信，随机生成会话秘钥，用公钥对会话秘钥进行加密。再将加密后的会话秘钥传给web服务器<br>web服务器：收到web浏览器传来的数据，通过私钥对数据解密，得到会话秘钥<br>web浏览器和web服务器通过会话秘钥进行数据传输啦</p>
-<h2 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>IP协议位于TCP/IP协议的第三层——网络层，与传输层协议相比，网络层的责任是提供点到点的服务，而传输层则是提供端到端的服务</p>
-<h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>Socket 是对 TCP/IP 协议族的一种封装，是应用层与TCP/IP协议族通信的中间软件抽象层。从设计模式的角度看来，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。</p>
-<p>Socket 还可以认为是一种网络间不同计算机上的进程通信的一种方法，利用三元组（ip地址，协议，端口）就可以唯一标识网络中的进程，网络中的进程通信可以利用这个标志与其它进程进行交互。</p>
-<p>Socket 起源于 Unix ，Unix/Linux 基本哲学之一就是“一切皆文件”，都可以用“打开(open) –&gt; 读写(write/read) –&gt; 关闭(close)”模式来进行操作。因此 Socket 也被处理为一种特殊的文件。</p>
+      <h3 id="1-输出以下代码运行结果，为什么？如果希望每隔1s输出一个结果，应该如何改造？注意不可改动square方法"><a href="#1-输出以下代码运行结果，为什么？如果希望每隔1s输出一个结果，应该如何改造？注意不可改动square方法" class="headerlink" title="1.输出以下代码运行结果，为什么？如果希望每隔1s输出一个结果，应该如何改造？注意不可改动square方法"></a>1.输出以下代码运行结果，为什么？如果希望每隔1s输出一个结果，应该如何改造？注意不可改动square方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">num</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      resolve(num * num)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  list.forEach(<span class="keyword">async</span> x =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
+<p>结果： 同时输出1、4、9</p>
+<p>分析：</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">forEach是不能阻塞的，默认是请求并行发起.</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">list</span>.forEach(<span class="keyword">async</span> x =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 相当于：</span></span><br><span class="line">  (<span class="keyword">async</span> x =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;)(<span class="number">1</span>);</span><br><span class="line">  (<span class="keyword">async</span> x =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;)(<span class="number">2</span>);</span><br><span class="line">  (<span class="keyword">async</span> x =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;)(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现间隔1s输出的方案：</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">方案一：</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>,len = <span class="built_in">list</span>.length;i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="built_in">list</span>[i];</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 相当于：</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res1 = <span class="keyword">await</span> square(<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res1);</span><br><span class="line">  <span class="keyword">const</span> res2 = <span class="keyword">await</span> square(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res2);</span><br><span class="line">  <span class="keyword">const</span> res3 = <span class="keyword">await</span> square(<span class="number">3</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">方案二：</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> x <span class="keyword">of</span> <span class="built_in">list</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 相当于：</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res1 = <span class="keyword">await</span> square(<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res1);</span><br><span class="line">  <span class="keyword">const</span> res2 = <span class="keyword">await</span> square(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res2);</span><br><span class="line">  <span class="keyword">const</span> res3 = <span class="keyword">await</span> square(<span class="number">3</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">方案三：利用<span class="built_in">Promise</span>本身的链式调用来实现串行。也是axios源码中用到的</span><br><span class="line"><span class="keyword">let</span> promise = <span class="built_in">Promise</span>.resolve();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">i = <span class="number">0</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (i === list.length) <span class="keyword">return</span>;</span><br><span class="line">  promise = promise.then(<span class="function"><span class="params">()</span> =&gt;</span> square(i)).then(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res)) </span><br><span class="line">  test(i++)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">方案四：使用reduce解决</span><br><span class="line">注释： reduce方法的第一个参数是<span class="keyword">async</span>函数，导致该函数的第一个参数是前一步操作返回的<span class="built_in">Promise</span>对象，所以必须使用<span class="keyword">await</span>等待它结束操作。</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  list.reduce(<span class="keyword">async</span> (_, x) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> _;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125;, <span class="literal">undefined</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">方案五：setTimeout</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">list</span>.forEach(<span class="keyword">async</span> (x, index)=&gt; &#123;</span><br><span class="line">    setTimeout(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">await</span> square(x);</span><br><span class="line">      <span class="built_in">console</span>.log(res);</span><br><span class="line">    &#125;, index * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
   </div>
   
@@ -498,7 +240,7 @@
         
           本文作者 : 勤富人 <br/>
         
-        原文链接 : <a href="">https://userlvqingke.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AE%80%E4%BB%8B/</a><br>
+        原文链接 : <a href="">https://userlvqingke.github.io/%E5%B7%A5%E4%BD%9C%E6%97%A5%E6%AF%8F%E5%A4%A9%E4%B8%80%E9%81%93%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95%E9%A2%98/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -602,20 +344,32 @@
           <i class="iconfont icon-06tags"></i>标签: 
           
           <span class="span--tag">
-            <a href="/tags/HTTP/">
-              #HTTP
+            <a href="/tags/javascript/">
+              #javascript
             </a>
           </span>
           
           <span class="span--tag">
-            <a href="/tags/HTTPS/">
-              #HTTPS
+            <a href="/tags/webpack/">
+              #webpack
             </a>
           </span>
           
           <span class="span--tag">
-            <a href="/tags/TCP/">
-              #TCP
+            <a href="/tags/react/">
+              #react
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/vue/">
+              #vue
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/css/">
+              #css
             </a>
           </span>
           
@@ -640,15 +394,9 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/WebView%E7%AE%80%E4%BB%8B/" target="_self">WebView简介</a>
+        <a href="/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" target="_self">前端面试题</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A8%E4%BB%8B%E7%BB%8D/" target="_self">微信小程序全介绍</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
